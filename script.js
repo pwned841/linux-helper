@@ -1,6 +1,6 @@
 // Configuration Mistral
         // https://console.mistral.ai/api-keys/
-        const MISTRAL_API_KEY = 'yiW2q9eJlNrz1Tj2L3OV9ojF23t5DErj';
+        const MISTRAL_API_KEY = '';
 
         // Liste des commandes Linux
         const commands = [
