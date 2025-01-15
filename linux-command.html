@@ -12,44 +12,51 @@
     <!-- Ajout de Highlight.js pour la coloration syntaxique -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <!-- Section des commandes Linux -->
-    <div id="commands-section">
-        <h1>Guide des Commandes Linux</h1>
-        <input type="text" id="search" placeholder="Rechercher une commande...">
-        <div id="commands"></div>
+    <div class="navbar">
+        <img src="./img/svg/dark.svg" class="dark" alt="Dark theme">
+        <img src="./img/svg/light.svg" class="light" alt="Light theme">
     </div>
-    
-    <!-- Section du chat -->
-    <div id="chat-container">
-        <div id="chat-header">
-            <div id="chat-title">Assistant Linux</div>
-            <button id="minimize-chat">
-                <i class="fas fa-minus"></i>
-            </button>
+    <!-- Section des commandes Linux -->
+    <div style="display: flex; flex-direction: row;">
+        <div id="commands-section">
+            <h1>Guide des Commandes Linux</h1>
+            <input type="text" id="search" placeholder="Rechercher une commande...">
+            <div id="commands"></div>
         </div>
-        <div id="chat-messages">
-            <div class="message ai-message">
-                Bonjour ! Je suis votre assistant Linux. Comment puis-je vous aider avec vos questions sur Linux aujourd'hui ?
+        
+        <!-- Section du chat -->
+        <div id="chat-container">
+            <div id="chat-header">
+                <div id="chat-title">Assistant Linux</div>
+                <button id="minimize-chat">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+            <div id="chat-messages">
+                <div class="message ai-message">
+                    Bonjour ! Je suis votre assistant Linux. Comment puis-je vous aider avec vos questions sur Linux aujourd'hui ?
+                </div>
+            </div>
+            <div id="chat-input-container">
+                <form id="chat-form">
+                    <textarea 
+                        id="chat-input" 
+                        placeholder="Posez votre question sur Linux..." 
+                        rows="1"
+                        maxlength="500"
+                    ></textarea>
+                    <button id="send-message" type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
         </div>
-        <div id="chat-input-container">
-            <form id="chat-form">
-                <textarea 
-                    id="chat-input" 
-                    placeholder="Posez votre question sur Linux..." 
-                    rows="1"
-                    maxlength="500"
-                ></textarea>
-                <button id="send-message" type="submit">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </form>
-        </div>
-    </div>
+   </div>
+    
 
-    <script src="/script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>
