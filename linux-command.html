@@ -15,48 +15,54 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <div class="navbar">
-        <img src="./img/svg/dark.svg" class="dark" alt="Dark theme">
-        <img src="./img/svg/light.svg" class="light" alt="Light theme">
-    </div>
-    <!-- Section des commandes Linux -->
-    <div style="display: flex; flex-direction: row;">
-        <div id="commands-section">
-            <h1>Guide des Commandes Linux</h1>
-            <input type="text" id="search" placeholder="Rechercher une commande...">
-            <div id="commands"></div>
+    <div class="content" onclick="clickOutside()">
+        <div class="navbar">
+            <img src="./img/svg/dark.svg" class="dark" alt="Dark theme">
+            <img src="./img/svg/light.svg" class="light" alt="Light theme">
         </div>
-        
-        <!-- Section du chat -->
-        <div id="chat-container">
-            <div id="chat-header">
-                <div id="chat-title">Assistant Linux</div>
+        <!-- Section des commandes Linux -->
+        <div style="display: flex; flex-direction: row;">
+            <div id="commands-section">
+                <h1>Guide des Commandes Linux</h1>
+                <input type="text" id="search" placeholder="Rechercher une commande...">
+                <div id="commands"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-container" style="display: none;">
+        <div id="chat-header">
+            <div id="chat-title">Assistant Linux</div>
                 <button id="minimize-chat">
                     <i class="fas fa-minus"></i>
                 </button>
             </div>
-            <div id="chat-messages">
-                <div class="message ai-message">
-                    Bonjour ! Je suis votre assistant Linux. Comment puis-je vous aider avec vos questions sur Linux aujourd'hui ?
-                </div>
-            </div>
-            <div id="chat-input-container">
-                <form id="chat-form">
-                    <textarea 
-                        id="chat-input" 
-                        placeholder="Posez votre question sur Linux..." 
-                        rows="1"
-                        maxlength="500"
-                    ></textarea>
-                    <button id="send-message" type="submit">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
+        <div id="chat-messages">
+            <div class="message ai-message">
+                Bonjour ! Je suis votre assistant Linux. Comment puis-je vous aider avec vos questions sur Linux aujourd'hui ?
             </div>
         </div>
-   </div>
+        <div id="chat-input-container">
+            <form id="chat-form">
+                <textarea 
+                    id="chat-input" 
+                    placeholder="Posez votre question sur Linux..." 
+                    rows="1"
+                    maxlength="500"
+                ></textarea>
+                <button id="send-message" type="submit">
+                    <img src="./img/svg/plane.svg" alt="Paper Plane">
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="popup" onclick="clickForChat()" style="bottom: 20px;">
+        <img src="./img/svg/chat.svg" alt="ChatBox icon">
+    </div>
+
     
 
     <script src="./js/script.js"></script>
+    <script src="./js/chatbox.js"></script>
 </body>
 </html>
