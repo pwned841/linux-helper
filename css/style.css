@@ -52,6 +52,10 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
+}
+
+.content{
+    display: flex;
     flex-direction: column;
 }
 
@@ -103,7 +107,7 @@ body {
 
 /* Section des commandes */
 #commands-section {
-    width: 80%;
+    width: 100%;
     height: 100vh;
     padding: 20px;
     overflow-y: auto;
@@ -156,11 +160,19 @@ body {
 
 /* Chat section */
 #chat-container {
-    width: 50%;
-    height: 100vh;
-    position: relative;
-    display: flex;
+    backdrop-filter: blur(10px);
+
+    width: 600px;
+    height: 500px;
+
+    position: fixed;
     flex-direction: column;
+
+    border-radius: 10px;
+
+    bottom: 6rem;
+    right: 40px;
+    z-index: 1000;
 }
 
 #chat-header {
@@ -170,6 +182,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    border-radius: 10px 10px 0 0;
 }
 
 #chat-title {
@@ -278,6 +292,28 @@ body {
     80%, 100% { content: ''; }
 }
 
+
+
+.popup {
+    background-color: var(--accent-color);
+
+    width: 60px;
+    height: 60px;
+
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    right: 20px;
+    z-index: 1000;
+
+    border-radius: 25px;
+}
+.popup:hover{
+    cursor: pointer;
+}
+
 /* Style pour le markdown */
 .ai-message {
     font-size: 0.95rem;
@@ -350,4 +386,20 @@ body {
 
 .ai-message th {
     background-color: var(--bg-secondary);
+}
+
+
+@media (max-width: 768px) {
+    #chat-container {
+        width: 100%;
+        height: 100vh;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+    }
+
+    #chat-header {
+        border-radius: 0;
+    }
+
 }
