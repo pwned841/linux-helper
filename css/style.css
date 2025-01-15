@@ -9,12 +9,38 @@
     --text-code: #D4D4D4;
     --accent-color: #4A9EFF;
 }
+/* theme sombre */
+:root[data-theme="dark"] {
+    --bg-primary: #0C0C0C;
+    --bg-secondary: #1A1A1A;
+    --bg-code: #262626;
+    --border-color: #363636;
+    --border-hover: #565656;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --text-code: #D4D4D4;
+    --accent-color: #4A9EFF;
+}
+
+/* theme clair */
+:root[data-theme="light"] {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F5F5F5;
+    --bg-code: #F0F0F0;
+    --border-color: #E0E0E0;
+    --border-hover: #CCCCCC;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --text-code: #333333;
+    --accent-color: #007AFF;
+}
 
 /* Reset CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
@@ -26,11 +52,58 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
+    flex-direction: column;
 }
+
+/* nav bar */
+.navbar {
+    height: 60px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+    background-color: var(--bg-secondary);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.theme-toggle img {
+    width: 24px;
+    height: 24px;
+}
+
+.dark, .light {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.dark:hover, .light:hover {
+    opacity: 0.8;
+}
+
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    flex-direction: column;
+}
+
 
 /* Section des commandes */
 #commands-section {
-    width: 50%;
+    width: 80%;
     height: 100vh;
     padding: 20px;
     overflow-y: auto;
