@@ -64,10 +64,14 @@ body {
     height: 60px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 0 20px;
     background-color: var(--bg-secondary);
+}
+.navbar > * {
+    display: flex;
+    align-items: center;
 }
 
 .theme-toggle {
@@ -115,13 +119,12 @@ body {
 }
 
 #search {
-    width: 100%;
+    width: 30%;
     padding: 12px;
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     color: var(--text-primary);
-    margin-bottom: 20px;
 }
 
 #commands {
