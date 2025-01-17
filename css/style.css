@@ -426,7 +426,7 @@ body {
     border-color: var(--border-color);
     border-radius: 15px;
     border: 5px;
-    margin-top: 10px;
+    margin: 20px 20px 0px 20px;
 
     display: flex;
     align-items: center;
@@ -452,23 +452,46 @@ body {
     margin-left: 15px;
 }
 
-.note {
+.note-section {
+    margin: 20px;
+    background-color: var(--bg-secondary);
+    border-radius: 15px;
+    width: 800px;
+}
+
+.note-header {
     display: flex;
-    align-items: flex-start; /* Aligner en haut */
-    justify-content: flex-start; /* Aligner à gauche */
-    margin-top: 10px;
-    margin-left: 10px;
+    align-items: center;
+    padding-left: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.note-container {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
 }
 
 .note-input {
-    width: 600px;
-    height: 200px;
-    border-radius: 15px;
+    width: 100%;
+    min-height: 150px;
+    background-color: transparent;
     border: none;
-    background-color: var(--border-hover);
-    color: var(--text-code);
-    margin: 0;
-    padding: 10px 15px; /* Ajoute un padding pour éviter que le texte ne colle aux bords */
-    text-align: left; /* Assure l'alignement à gauche */
-    vertical-align: top; /* Aligne le texte en haut */
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
 }
+
+.note-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.note-input:focus {
+    outline: none;
+}
+
