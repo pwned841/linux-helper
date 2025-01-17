@@ -12,27 +12,28 @@
     <!-- Ajout de Highlight.js pour la coloration syntaxique -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <div class="content" onclick="clickOutside()">
         <div class="navbar">
-            <input type="text" id="search" placeholder="Rechercher une commande...">
-
             <div class="sandbox-link">
-                <a href="./html/sandbox.html">Sandbox &nbsp</a>
-                <img src="./img/svg/sandbox.svg" alt="sandbox icon">
+                <a href="/linux-command.html">Home &nbsp</a>
+                <img src="../img/svg/home.svg" alt="sandbox icon">
             </div>
 
-            <img src="./img/svg/dark.svg" class="dark" alt="Dark theme">
-            <img src="./img/svg/light.svg" class="light" alt="Light theme">
+            <img src="../img/svg/dark.svg" class="dark" alt="Dark theme">
+            <img src="../img/svg/light.svg" class="light" alt="Light theme">
         </div>
-        <!-- Section des commandes Linux -->
-        <div style="display: flex; flex-direction: row;">
-            <div id="commands-section">
-                <h1>Guide des Commandes Linux</h1>
-                <div id="commands"></div>
+    
+        <div class="sandbox">
+            <div class="sandbox-in-border">
+                
             </div>
+        </div>
+
+        <div class="note">
+            <input type="text" class="note-input" placeholder="Gardez vos notes !">
         </div>
     </div>
 
@@ -63,13 +64,12 @@
         </div>
     </div>
     <div class="popup" onclick="clickForChat()" style="bottom: 20px;">
-        <img src="./img/svg/chat.svg" alt="ChatBox icon">
+        <img src="../img/svg/chat.svg" alt="ChatBox icon">
     </div>
 
     
-
-    <script src="./js/script.js"></script>
-    <script src="./js/chatbox.js"></script>
-    <script src="./js/light-dark_theme.js"></script>
+    <script src="../js/chatbox.js"></script>
+    <script src="../js/light-dark_theme.js"></script>
+    <script src="../js/terminal.js"></script>
 </body>
 </html>
