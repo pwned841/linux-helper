@@ -1,3 +1,9 @@
+fetch('../json/command.json')
+  .then(response => response.json())
+  .then(data => {
+    commands = data;
+}).catch(error => console.error('Erreur de chargement des commandes:', error));
+
 const terminal = document.querySelector('.sandbox-in-border');
 let username = '';
 let userPrompt = '';
@@ -63,11 +69,6 @@ fileSystem['/']['content']['home'][username] = {
     }
 };
 
-fetch('../json/command.json')
-  .then(response => response.json())
-  .then(data => {
-    commands = data;
-}).catch(error => console.error('Erreur de chargement des commandes:', error));
 
 const commandActions = {
     showHelp: () => {
@@ -267,8 +268,19 @@ const commandActions = {
   
     showDate: () => {
       return new Date().toLocaleString();
+    },
+
+    exitTerminal: () => {
+      const oldActiveLine = activeLine;
+      terminalContent.innerHTML = '';
+      terminalContent.appendChild(oldActiveLine);
+      return '', handleLogin(input);
+
+      // retourner au menu de login et effacedr l'historique 
     }
 };
+
+
 
 function resolvePath(path) {
     if (path.startsWith('/')) return path;
