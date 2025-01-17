@@ -78,5 +78,10 @@
     "description": "Recherche un motif dans un texte",
     "usage": "grep <pattern> <filename>",
     "action": "grepSearch"
+  },
+  "exit": {
+    "description": "Fais quitter la session à l'utilisateur connecter, retourne au login",
+    "usage": "exit",
+    "action": "exitTerminal"
   }
 }
