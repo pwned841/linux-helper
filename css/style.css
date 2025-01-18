@@ -41,6 +41,7 @@
     padding: 0;
     box-sizing: border-box;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    text-decoration: none;
 }
 
 body {
@@ -52,6 +53,10 @@ body {
     display: flex;
     height: 100vh;
     overflow: hidden;
+}
+
+a{
+    color: var(--text-primary);
 }
 
 .content{
@@ -406,3 +411,87 @@ body {
     }
 
 }
+
+
+
+
+
+/* SandBox style */
+
+.sandbox{
+    width: 800px;
+    height: 450px;
+
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    border-radius: 15px;
+    border: 5px;
+    margin: 20px 20px 0px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+.sandbox-in-border{
+    width: 790px;
+    height: 440px;
+
+    background: var(--bg-primary);
+
+    border-radius: 15px;
+
+}
+
+.user-name{
+    color: rgb(21, 255, 0);
+
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.note-section {
+    margin: 20px;
+    background-color: var(--bg-secondary);
+    border-radius: 15px;
+    width: 800px;
+}
+
+.note-header {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.note-container {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.note-input {
+    width: 100%;
+    min-height: 150px;
+    background-color: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    outline: none;
+}
+
+.note-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.note-input:focus {
+    outline: none;
+}
+

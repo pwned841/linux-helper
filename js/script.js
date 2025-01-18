@@ -1,35 +1,11 @@
-// Configuration du thème
-const THEME_KEY = 'app-theme';
 
-// Fonction pour gérer le changement de thème
-function toggleTheme() {
-    const currentTheme = localStorage.getItem(THEME_KEY) || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem(THEME_KEY, newTheme);
-    
-    // Mettre à jour l'icône
-    document.querySelector('.dark').style.display = newTheme === 'dark' ? 'none' : 'block';
-    document.querySelector('.light').style.display = newTheme === 'dark' ? 'block' : 'none';
-}
-
-// Initialisation du thème au chargement
-function initTheme() {
-    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    // Afficher la bonne icône
-    document.querySelector('.dark').style.display = savedTheme === 'dark' ? 'none' : 'block';
-    document.querySelector('.light').style.display = savedTheme === 'dark' ? 'block' : 'none';
-}
 
 
 
 
 // Configuration Mistral
 // https://console.mistral.ai/api-keys/
-const MISTRAL_API_KEY = 'yiW2q9eJlNrz1Tj2L3OV9ojF23t5DErj';
+const MISTRAL_API_KEY = '';
 
 // Liste des commandes Linux
 const commands = [
@@ -744,13 +720,6 @@ function addMessage(content, isUser = false) {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialisation des commandes
     displayCommands();
-    initTheme();
-    
-    // Écouteur pour le bouton de thème
-    const themeToggles = document.querySelectorAll('.dark, .light');
-    themeToggles.forEach(toggle => {
-        toggle.addEventListener('click', toggleTheme);
-    });
 
     // Écouteur de recherche
     document.getElementById('search').addEventListener('input', (e) => {
