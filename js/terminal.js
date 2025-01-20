@@ -1,8 +1,121 @@
-fetch('../json/command.json')
-  .then(response => response.json())
-  .then(data => {
-    commands = data;
-}).catch(error => console.error('Erreur de chargement des commandes:', error));
+// Remplacez la partie fetch par cette configuration directe
+const commands = {
+  "help": {
+      "description": "Affiche l'aide des commandes disponibles",
+      "usage": "help",
+      "action": "showHelp"
+  },
+  "clear": {
+      "description": "Efface l'écran",
+      "usage": "clear",
+      "action": "clearScreen"
+  },
+  "pwd": {
+      "description": "Affiche le répertoire de travail actuel",
+      "usage": "pwd",
+      "action": "showCurrentDirectory"
+  },
+  "ls": {
+      "description": "Liste le contenu du répertoire",
+      "usage": "ls [-l]",
+      "action": "listFiles"
+  },
+  "cd": {
+      "description": "Change de répertoire",
+      "usage": "cd [directory]",
+      "action": "changeDirectory"
+  },
+  "mkdir": {
+      "description": "Crée un nouveau répertoire",
+      "usage": "mkdir <directory>",
+      "action": "makeDirectory"
+  },
+  "touch": {
+      "description": "Crée un nouveau fichier",
+      "usage": "touch <file>",
+      "action": "touchFile"
+  },
+  "cat": {
+      "description": "Affiche le contenu d'un fichier",
+      "usage": "cat <file>",
+      "action": "showFileContent"
+  },
+  "rm": {
+      "description": "Supprime un fichier ou répertoire",
+      "usage": "rm [-r] <file/directory>",
+      "action": "removeFile"
+  },
+  "echo": {
+      "description": "Affiche un message ou écrit dans un fichier",
+      "usage": "echo <message> [> file]",
+      "action": "echo"
+  },
+  "whoami": {
+      "description": "Affiche le nom de l'utilisateur courant",
+      "usage": "whoami",
+      "action": "showUsername"
+  },
+  "history": {
+      "description": "Affiche l'historique des commandes",
+      "usage": "history",
+      "action": "showHistory"
+  },
+  "man": {
+      "description": "Affiche le manuel d'une commande",
+      "usage": "man <command>",
+      "action": "showManual"
+  },
+  "uname": {
+      "description": "Affiche les informations système",
+      "usage": "uname [-a]",
+      "action": "showSystemInfo"
+  },
+  "grep": {
+      "description": "Recherche un motif dans un fichier",
+      "usage": "grep <pattern> <file>",
+      "action": "grepSearch"
+  },
+  "date": {
+      "description": "Affiche la date et l'heure actuelles",
+      "usage": "date",
+      "action": "showDate"
+  },
+  "exit": {
+      "description": "Quitte le terminal",
+      "usage": "exit",
+      "action": "exitTerminal"
+  },
+  "mv": {
+      "description": "Déplace ou renomme un fichier",
+      "usage": "mv <source> <destination>",
+      "action": "moveFile"
+  },
+  "cp": {
+      "description": "Copie un fichier ou répertoire",
+      "usage": "cp [-r] <source> <destination>",
+      "action": "copyFile"
+  },
+  "find": {
+      "description": "Recherche des fichiers",
+      "usage": "find <pattern>",
+      "action": "findFiles"
+  },
+  "ps": {
+      "description": "Affiche les processus en cours",
+      "usage": "ps",
+      "action": "showProcesses"
+  },
+  "du": {
+      "description": "Affiche l'utilisation du disque",
+      "usage": "du [directory]",
+      "action": "showDiskUsage"
+  },
+  "chmod": {
+      "description": "Change les permissions d'un fichier",
+      "usage": "chmod <mode> <file>",
+      "action": "changePermissions"
+  }
+};
 
 const terminal = document.querySelector('.sandbox-in-border');
 let username = '';
@@ -42,7 +155,7 @@ activeLine.appendChild(commandInput);
 let commandHistory = [];
 let historyIndex = -1;
 let loginStep = 'username';
-let commands = null;
+let command = null;
 let currentDirectory = '/home/' + username;
 
 
