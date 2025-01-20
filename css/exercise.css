@@ -1,0 +1,173 @@
+/* Styles pour la page d'exercices */
+
+:root {
+    --bg-primary: #0C0C0C;
+    --bg-secondary: #1A1A1A;
+    --bg-code: #262626;
+    --border-color: #363636;
+    --border-hover: #565656;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --text-code: #D4D4D4;
+    --accent-color: #4A9EFF;
+    --span-color: #0033A0;
+}
+/* theme sombre */
+:root[data-theme="dark"] {
+    --bg-primary: #0C0C0C;
+    --bg-secondary: #1A1A1A;
+    --bg-code: #262626;
+    --border-color: #363636;
+    --border-hover: #565656;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --text-code: #D4D4D4;
+    --accent-color: #4A9EFF;
+    --span-color: #00ff00;
+}
+
+/* theme clair */
+:root[data-theme="light"] {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F5F5F5;
+    --bg-code: #F0F0F0;
+    --border-color: #E0E0E0;
+    --border-hover: #CCCCCC;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --text-code: #333333;
+    --accent-color: #007AFF;
+    --span-color: #0033A0;
+}
+
+.exercise-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.exercise-box {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.exercise-box h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.question-box {
+    background-color: var(--bg-code);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+#command-description {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+#user-answer {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    margin-bottom: 10px;
+}
+
+#user-answer:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.feedback {
+    display: none;
+    margin: 15px 0 25px 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.feedback-result {
+    padding: 15px;
+    font-weight: 500;
+}
+
+.feedback.correct .feedback-result {
+    background-color: rgba(0, 255, 0, 0.1);
+    color: #00ff00;
+}
+
+.feedback.incorrect .feedback-result {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff4444;
+}
+
+.feedback-examples {
+    background-color: var(--bg-code);
+    padding: 15px;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.feedback-examples h3 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.feedback-examples pre {
+    font-family: 'Fira Code', monospace;
+    color: var(--text-code);
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin: 0;
+}
+
+#submit-answer, #next-question {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+#submit-answer:hover, #next-question:hover {
+    background-color: #3A8EEF;
+}
+
+#submit-answer:disabled, #next-question:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+#score {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .exercise-container {
+        padding: 0 10px;
+    }
+
+    .exercise-box {
+        padding: 15px;
+    }
+}
