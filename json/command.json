@@ -108,5 +108,10 @@
       "description": "Affiche l'utilisation du disque",
       "usage": "du [path]",
       "action": "showDiskUsage"
+  },
+  "chmod": {
+    "description": "Modifie les permissions d'un fichier ou répertoire",
+    "usage": "chmod <mode> <fichier>",
+    "action": "changePermissions"
   }
 }
