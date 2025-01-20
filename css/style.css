@@ -457,6 +457,7 @@ body {
 
 .note-section {
     margin: 20px;
+    padding: 0px 3px 3px;
     background-color: var(--bg-secondary);
     border-radius: 15px;
     width: 800px;
