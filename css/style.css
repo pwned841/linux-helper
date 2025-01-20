@@ -505,3 +505,711 @@ body {
 span{
     color: var(--span-color);
 }
+
+/* Styles pour la page d'exercices */
+
+.exercise-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.exercise-box {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.exercise-box h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.question-box {
+    background-color: var(--bg-code);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+#command-description {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+#user-answer {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    margin-bottom: 10px;
+}
+
+#user-answer:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.feedback {
+    display: none;
+    margin: 15px 0 25px 0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.feedback-result {
+    padding: 15px;
+    font-weight: 500;
+}
+
+.feedback.correct .feedback-result {
+    background-color: rgba(0, 255, 0, 0.1);
+    color: #00ff00;
+}
+
+.feedback.incorrect .feedback-result {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff4444;
+}
+
+.feedback-examples {
+    background-color: var(--bg-code);
+    padding: 15px;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.feedback-examples h3 {
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.feedback-examples pre {
+    font-family: 'Fira Code', monospace;
+    color: var(--text-code);
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin: 0;
+}
+
+#submit-answer, #next-question {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+#submit-answer:hover, #next-question:hover {
+    background-color: #3A8EEF;
+}
+
+#submit-answer:disabled, #next-question:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+}
+
+#score {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .exercise-container {
+        padding: 0 10px;
+    }
+
+    .exercise-box {
+        padding: 15px;
+    }
+}
+
+/* Nouveaux styles pour la page d'accueil */
+
+.main-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Navbar mise à jour */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+    background-color: var(--bg-code);
+}
+
+#search {
+    max-width: 300px;
+    width: 100%;
+}
+
+/* Section Guide Linux */
+.linux-guide {
+    margin-bottom: 3rem;
+}
+
+.linux-guide h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.linux-guide h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* Grille des ressources */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.resource-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.resource-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.resource-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.resource-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.resource-card ul li {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+.resource-card ul li::before {
+    content: "•";
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+}
+
+/* Section des commandes */
+.commands-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #search {
+        width: 100%;
+        max-width: none;
+    }
+
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .linux-guide h1 {
+        font-size: 2rem;
+    }
+
+    .linux-guide h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Dark mode adjustments */
+:root[data-theme="dark"] .resource-card {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="dark"] .resource-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Nouveaux styles pour la page d'accueil */
+
+.main-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Theme toggle */
+.theme-toggle-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    background-color: var(--bg-secondary);
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+/* Navigation Cards */
+.nav-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.nav-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nav-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.nav-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.search-card {
+    display: flex;
+    flex-direction: column;
+}
+
+#search {
+    margin-top: 0.5rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+#search:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Linux Guide Section */
+.linux-guide {
+    margin-bottom: 3rem;
+}
+
+.linux-guide h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.linux-guide h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* Resources Grid */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.resource-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.resource-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.resource-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.resource-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.resource-card ul li {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+.resource-card ul li::before {
+    content: "•";
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+}
+
+/* Section des commandes */
+.commands-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Dark mode adjustments */
+:root[data-theme="dark"] .resource-card,
+:root[data-theme="dark"] .nav-card {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="dark"] .resource-card:hover,
+:root[data-theme="dark"] .nav-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem;
+    }
+
+    .linux-guide h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .linux-guide h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .nav-cards-grid,
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .theme-toggle-container {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+}
+
+/* Styles de base */
+body {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-y: auto;
+}
+
+.content {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+}
+
+.main-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Theme toggle */
+.theme-toggle-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    background-color: var(--bg-secondary);
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+/* Navigation Cards */
+.nav-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.nav-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nav-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.nav-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.search-card {
+    display: flex;
+    flex-direction: column;
+}
+
+#search {
+    margin-top: 0.5rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+#search:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* Linux Guide Section */
+.linux-guide {
+    margin-bottom: 3rem;
+}
+
+.linux-guide h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.linux-guide h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* Resources Grid */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.resource-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.resource-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.resource-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.resource-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.resource-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.resource-card ul li {
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+.resource-card ul li::before {
+    content: "•";
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+}
+
+/* Section des commandes */
+.commands-section {
+    margin-top: 2rem;
+}
+
+.commands-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Dark mode adjustments */
+:root[data-theme="dark"] .resource-card,
+:root[data-theme="dark"] .nav-card {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="dark"] .resource-card:hover,
+:root[data-theme="dark"] .nav-card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 1rem;
+    }
+
+    .linux-guide h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .linux-guide h2 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .nav-cards-grid,
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .theme-toggle-container {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+}
+
