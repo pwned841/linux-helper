@@ -25,3 +25,7 @@ const MISTRAL_API_KEY = 'votre-clé-api';
   - "Comment supprimer un dossier ?"
   - "Qu'est-ce que la commande ls ?"
   - "Comment voir l'espace disque ?"
+
+### Sandbox
+- Testez les commandes directement dans le terminal
+- Prenez des notes
