@@ -26,7 +26,6 @@ activeLine.style.marginTop = 'auto';
 terminalContent.appendChild(activeLine);
 
 const promptSpan = document.createElement('span');
-promptSpan.style.color = '#00ff00';
 activeLine.appendChild(promptSpan);
 
 const commandInput = document.createElement('input');
@@ -46,6 +45,8 @@ let loginStep = 'username';
 let commands = null;
 let currentDirectory = '/home/' + username;
 
+
+
 let fileSystem = {
   '/': {
       type: 'directory',
@@ -61,13 +62,15 @@ let fileSystem = {
 fileSystem['/']['content']['home'][username] = {
     type: 'directory',
     content: {
-      'Documents': { type: 'directory', content: {} },
-      'Images': { type: 'directory', content: {} },
+      'Documents': { type: 'directory', content: {}},
+      'Images': { type: 'directory', content: {}},
       'Téléchargements': { type: 'directory', content: {} },
       'Bureau': { type: 'directory', content: {} },
-      '.bashrc': { type: 'file', content: '# Configuration du terminal' }
+      '.bashrc': { type: 'file', content: '# Configuration du terminal'}
     }
 };
+
+let permissions = fileSystem.permission
 
 
 const commandActions = {
@@ -100,13 +103,14 @@ const commandActions = {
     let output = '';
   
     for (const [name, item] of Object.entries(current.content)) {
-    if (showDetails) {
-      const type = item.type === 'directory' ? 'd' : '-';
-      const date = new Date().toLocaleString();
-      output += `${type}rw-r--r-- 1 ${username} ${username} 4096 ${date} ${name}\n`;
-    } else {
-      output += `${name}  `;
-    }
+      if (showDetails) {
+        const type = item.type === 'directory' ? 'd' : '-';
+        const permissions = item.permissions || 'rw-r--r--';
+        const date = new Date().toLocaleString();
+        output += `${type}${permissions} 1 ${username} ${username} 4096 ${date} ${name}\n`;
+      } else {
+        output += `${name}  `;
+      }
     }
     return output;
   },
@@ -330,7 +334,7 @@ const commandActions = {
     return '';
   },
 
-  copyFile: (args) => {
+  copyFile: (args) => { 
     if (args.length !== 2) return 'cp: utilisation: cp [-r] <source> <destination>';
     
     const recursive = args[0] === '-r';
@@ -420,21 +424,82 @@ const commandActions = {
     
     if (!file) return `chmod: impossible d'accéder à '${args[1]}': Aucun fichier ou dossier de ce type`;
     
-    file.permissions = mode;
+    if (!/^[0-7]{3}$/.test(mode)) {
+        return 'chmod: mode invalide: ' + mode;
+    }
+
+    const permissions = {
+        
+        '777': 'rwxrwxrwx',
+        '770': 'rwxrwx---',
+        '760': 'rwxrw----',
+        '750': 'rwxr-x---',
+        '740': 'rwxr-----',
+        '730': 'rwxrwx---',
+        '720': 'rwx-w----',
+        '710': 'rwx--x---',
+        '700': 'rwx------',
+        
+        
+        '677': 'rw-rwxrwx',
+        '670': 'rw-rwx---',
+        '660': 'rw-rw----',
+        '650': 'rw-r-x---',
+        '640': 'rw-r-----',
+        '630': 'rw--wx---',
+        '620': 'rw--w----',
+        '610': 'rw---x---',
+        '600': 'rw-------',
+        
+        
+        '577': 'r-xrwxrwx',
+        '570': 'r-xrwx---',
+        '560': 'r-xrw----',
+        '550': 'r-xr-x---',
+        '540': 'r-xr-----',
+        '530': 'r-x-wx---',
+        '520': 'r-x-w----',
+        '510': 'r-x--x---',
+        '500': 'r-x------',
+        
+        
+        '644': 'rw-r--r--',
+        '755': 'rwxr-xr-x',
+        '766': 'rwxrw-rw-',
+        '777': 'rwxrwxrwx',
+        '400': 'r--------',
+        '444': 'r--r--r--',
+        '666': 'rw-rw-rw-',
+        '700': 'rwx------',
+        '744': 'rwxr--r--',
+        '555': 'r-xr-xr-x',
+        '600': 'rw-------',
+        '711': 'rwx--x--x',
+        '444': 'r--r--r--'
+    };
+
+    if (permissions[mode]) {
+        file.permissions = permissions[mode];
+    } else {
+        const owner = parseInt(mode[0]);
+        const group = parseInt(mode[1]);
+        const others = parseInt(mode[2]);
+        
+        const convertToRWX = (num) => {
+            return [
+                (num & 4) ? 'r' : '-',
+                (num & 2) ? 'w' : '-',
+                (num & 1) ? 'x' : '-'
+            ].join('');
+        };
+        
+        file.permissions = convertToRWX(owner) + convertToRWX(group) + convertToRWX(others);
+    }
+
     return '';
   }
 };
 
-
-
-function resolvePath(path) {
-    if (path.startsWith('/')) return path;
-    if (path === '..') {
-      return currentDirectory.substring(0, currentDirectory.lastIndexOf('/'));
-    }
-    if (path === '.') return currentDirectory;
-    return `${currentDirectory}/${path}`;
-}
   
 function resolvePath(path) {
     if (path.startsWith('/')) return path;
@@ -446,18 +511,18 @@ function resolvePath(path) {
 }
   
 function navigateToPath(path) {
-const parts = path.split('/').filter(p => p);
-let current = fileSystem['/'];
+  const parts = path.split('/').filter(p => p);
+  let current = fileSystem['/'];
 
-for (const part of parts) {
-    if (part === '..') {
-        continue;
-    }
-    if (!current.content[part]) return null;
-    current = current.content[part];
-}
+  for (const part of parts) {
+      if (part === '..') {
+          continue;
+      }
+      if (!current.content[part]) return null;
+      current = current.content[part];
+  }
 
-return current;
+  return current;
 }
 
 function addToHistory(input, isCommand = true) {
@@ -516,7 +581,6 @@ function handleLogin(input) {
       loginStep = 'password';
       updatePrompt();
   } else if (loginStep === 'password') {
-      addToHistory('Password: *****');
       addToHistory(`Welcome ${username} !`, false);
       loginStep = 'complete';
       updatePrompt();
