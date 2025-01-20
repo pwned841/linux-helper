@@ -1,4 +1,4 @@
-// Remplacez la partie fetch par cette configuration directe
+
 const commands = {
   "help": {
       "description": "Affiche l'aide des commandes disponibles",
@@ -155,7 +155,6 @@ activeLine.appendChild(commandInput);
 let commandHistory = [];
 let historyIndex = -1;
 let loginStep = 'username';
-let command = null;
 let currentDirectory = '/home/' + username;
 
 
