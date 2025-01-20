@@ -1,8 +1,121 @@
-fetch('../json/command.json')
-  .then(response => response.json())
-  .then(data => {
-    commands = data;
-}).catch(error => console.error('Erreur de chargement des commandes:', error));
+
+const commands = {
+  "help": {
+      "description": "Affiche l'aide des commandes disponibles",
+      "usage": "help",
+      "action": "showHelp"
+  },
+  "clear": {
+      "description": "Efface l'écran",
+      "usage": "clear",
+      "action": "clearScreen"
+  },
+  "pwd": {
+      "description": "Affiche le répertoire de travail actuel",
+      "usage": "pwd",
+      "action": "showCurrentDirectory"
+  },
+  "ls": {
+      "description": "Liste le contenu du répertoire",
+      "usage": "ls [-l]",
+      "action": "listFiles"
+  },
+  "cd": {
+      "description": "Change de répertoire",
+      "usage": "cd [directory]",
+      "action": "changeDirectory"
+  },
+  "mkdir": {
+      "description": "Crée un nouveau répertoire",
+      "usage": "mkdir <directory>",
+      "action": "makeDirectory"
+  },
+  "touch": {
+      "description": "Crée un nouveau fichier",
+      "usage": "touch <file>",
+      "action": "touchFile"
+  },
+  "cat": {
+      "description": "Affiche le contenu d'un fichier",
+      "usage": "cat <file>",
+      "action": "showFileContent"
+  },
+  "rm": {
+      "description": "Supprime un fichier ou répertoire",
+      "usage": "rm [-r] <file/directory>",
+      "action": "removeFile"
+  },
+  "echo": {
+      "description": "Affiche un message ou écrit dans un fichier",
+      "usage": "echo <message> [> file]",
+      "action": "echo"
+  },
+  "whoami": {
+      "description": "Affiche le nom de l'utilisateur courant",
+      "usage": "whoami",
+      "action": "showUsername"
+  },
+  "history": {
+      "description": "Affiche l'historique des commandes",
+      "usage": "history",
+      "action": "showHistory"
+  },
+  "man": {
+      "description": "Affiche le manuel d'une commande",
+      "usage": "man <command>",
+      "action": "showManual"
+  },
+  "uname": {
+      "description": "Affiche les informations système",
+      "usage": "uname [-a]",
+      "action": "showSystemInfo"
+  },
+  "grep": {
+      "description": "Recherche un motif dans un fichier",
+      "usage": "grep <pattern> <file>",
+      "action": "grepSearch"
+  },
+  "date": {
+      "description": "Affiche la date et l'heure actuelles",
+      "usage": "date",
+      "action": "showDate"
+  },
+  "exit": {
+      "description": "Quitte le terminal",
+      "usage": "exit",
+      "action": "exitTerminal"
+  },
+  "mv": {
+      "description": "Déplace ou renomme un fichier",
+      "usage": "mv <source> <destination>",
+      "action": "moveFile"
+  },
+  "cp": {
+      "description": "Copie un fichier ou répertoire",
+      "usage": "cp [-r] <source> <destination>",
+      "action": "copyFile"
+  },
+  "find": {
+      "description": "Recherche des fichiers",
+      "usage": "find <pattern>",
+      "action": "findFiles"
+  },
+  "ps": {
+      "description": "Affiche les processus en cours",
+      "usage": "ps",
+      "action": "showProcesses"
+  },
+  "du": {
+      "description": "Affiche l'utilisation du disque",
+      "usage": "du [directory]",
+      "action": "showDiskUsage"
+  },
+  "chmod": {
+      "description": "Change les permissions d'un fichier",
+      "usage": "chmod <mode> <file>",
+      "action": "changePermissions"
+  }
+};
 
 const terminal = document.querySelector('.sandbox-in-border');
 let username = '';
@@ -26,7 +139,6 @@ activeLine.style.marginTop = 'auto';
 terminalContent.appendChild(activeLine);
 
 const promptSpan = document.createElement('span');
-promptSpan.style.color = '#00ff00';
 activeLine.appendChild(promptSpan);
 
 const commandInput = document.createElement('input');
@@ -35,7 +147,7 @@ commandInput.style.backgroundColor = 'transparent';
 commandInput.style.border = 'none';
 commandInput.style.color = 'var(--text-primary)';
 commandInput.style.fontFamily = 'monospace';
-commandInput.style.width = '80%';
+commandInput.style.width = '50%';
 commandInput.style.outline = 'none';
 commandInput.style.marginLeft = '5px';
 activeLine.appendChild(commandInput);
@@ -43,383 +155,463 @@ activeLine.appendChild(commandInput);
 let commandHistory = [];
 let historyIndex = -1;
 let loginStep = 'username';
-let commands = null;
 let currentDirectory = '/home/' + username;
+
+
 
 let fileSystem = {
   '/': {
-    type: 'directory',
-    content: {
-      'home': {
-        type: 'directory',
-        content: {}
+      type: 'directory',
+      content: {
+          'home': {
+              type: 'directory',
+              content: {}
+          }
       }
-    }
   }
 };
 
 fileSystem['/']['content']['home'][username] = {
     type: 'directory',
     content: {
-      'Documents': { type: 'directory', content: {} },
-      'Images': { type: 'directory', content: {} },
+      'Documents': { type: 'directory', content: {}},
+      'Images': { type: 'directory', content: {}},
       'Téléchargements': { type: 'directory', content: {} },
       'Bureau': { type: 'directory', content: {} },
-      '.bashrc': { type: 'file', content: '# Configuration du terminal' }
+      '.bashrc': { type: 'file', content: '# Configuration du terminal'}
     }
 };
+
+let permissions = fileSystem.permission
 
 
 const commandActions = {
-    showHelp: () => {
-      let helpText = 'Commandes disponibles:\n\n';
-      for (const [cmd, info] of Object.entries(commands)) {
-        helpText += `${cmd.padEnd(10)} - ${info.description}\n`;
-        helpText += `           Usage: ${info.usage}\n\n`;
+  showHelp: () => {
+    let helpText = 'Commandes disponibles:\n\n';
+    for (const [cmd, info] of Object.entries(commands)) {
+    helpText += `${cmd.padEnd(10)} - ${info.description}\n`;
+    helpText += `           Usage: ${info.usage}\n\n`;
+    }
+    return helpText;
+  },
+  
+  clearScreen: () => {
+    const oldActiveLine = activeLine;
+    terminalContent.innerHTML = '';
+    terminalContent.appendChild(oldActiveLine);
+    return '';
+  },
+  
+  showCurrentDirectory: () => {
+    return currentDirectory;
+  },
+  
+  listFiles: (args) => {
+    const path = currentDirectory;
+    let current = navigateToPath(path);
+    if (!current) return `Erreur: Chemin invalide ${path}`;
+  
+    const showDetails = args.includes('-l');
+    let output = '';
+  
+    for (const [name, item] of Object.entries(current.content)) {
+      if (showDetails) {
+        const type = item.type === 'directory' ? 'd' : '-';
+        const permissions = item.permissions || 'rw-r--r--';
+        const date = new Date().toLocaleString();
+        output += `${type}${permissions} 1 ${username} ${username} 4096 ${date} ${name}\n`;
+      } else {
+        output += `${name}  `;
       }
-      return helpText;
-    },
+    }
+    return output;
+  },
   
-    clearScreen: () => {
-      const oldActiveLine = activeLine;
-      terminalContent.innerHTML = '';
-      terminalContent.appendChild(oldActiveLine);
+  changeDirectory: (args) => {
+    if (!args[0]) {
+      currentDirectory = '/home/' + username;
+      userPrompt = `${username}@machine: ${currentDirectory} $ `;
+      updatePrompt();
       return '';
-    },
+    }
   
-    showCurrentDirectory: () => {
-      return currentDirectory;
-    },
+    const newPath = resolvePath(args[0]);
+    const dir = navigateToPath(newPath);
   
-    listFiles: (args) => {
-      const path = currentDirectory;
-      let current = navigateToPath(path);
-      if (!current) return `Erreur: Chemin invalide ${path}`;
+    if (!dir || dir.type !== 'directory') {
+      return `cd: ${args[0]}: Aucun fichier ou dossier de ce type`;
+    }
   
-      const showDetails = args.includes('-l');
-      let output = '';
+    currentDirectory = newPath;
+    userPrompt = `${username}@machine: ${currentDirectory} $ `;
+    updatePrompt();
+    return '';
+  },
   
-      for (const [name, item] of Object.entries(current.content)) {
-        if (showDetails) {
-          const type = item.type === 'directory' ? 'd' : '-';
-          const date = new Date().toLocaleString();
-          output += `${type}rw-r--r-- 1 ${username} ${username} 4096 ${date} ${name}\n`;
-        } else {
-          output += `${name}  `;
+  makeDirectory: (args) => {
+    if (!args[0]) return 'mkdir: opérande manquant';
+    
+    const path = resolvePath(args[0]);
+    const parentPath = path.substring(0, path.lastIndexOf('/'));
+    const dirName = path.substring(path.lastIndexOf('/') + 1);
+    
+    let parent = navigateToPath(parentPath);
+    if (!parent) return `mkdir: impossible de créer le répertoire '${args[0]}': Chemin invalide`;
+    
+    parent.content[dirName] = { type: 'directory', content: {} };
+    return '';
+  },
+  
+  touchFile: (args) => {
+    if (!args[0]) return 'touch: opérande manquant';
+    
+    const path = resolvePath(args[0]);
+    const parentPath = path.substring(0, path.lastIndexOf('/'));
+    const fileName = path.substring(path.lastIndexOf('/') + 1);
+    
+    let parent = navigateToPath(parentPath);
+    if (!parent) return `touch: impossible de créer '${args[0]}': Chemin invalide`;
+    
+    parent.content[fileName] = { type: 'file', content: '' };
+    return '';
+  },
+  
+  showFileContent: (args) => {
+    if (!args[0]) return 'cat: opérande manquant';
+    
+    const path = resolvePath(args[0]);
+    const file = navigateToPath(path);
+    
+    if (!file) return `cat: ${args[0]}: Aucun fichier ou dossier de ce type`;
+    if (file.type !== 'file') return `cat: ${args[0]}: Est un dossier`;
+    
+    return file.content;
+  },
+  
+  removeFile: (args) => {
+    if (!args[0]) return 'rm: opérande manquant';
+    
+    const recursive = args.includes('-r');
+    const target = args[args.length - 1];
+    const path = resolvePath(target);
+    
+    const parentPath = path.substring(0, path.lastIndexOf('/'));
+    const name = path.substring(path.lastIndexOf('/') + 1);
+    
+    let parent = navigateToPath(parentPath);
+    if (!parent) return `rm: impossible de supprimer '${target}': Aucun fichier ou dossier de ce type`;
+    
+    const item = parent.content[name];
+    if (!item) return `rm: impossible de supprimer '${target}': Aucun fichier ou dossier de ce type`;
+    
+    if (item.type === 'directory' && !recursive) {
+    return `rm: impossible de supprimer '${target}': Est un dossier`;
+    }
+    
+    delete parent.content[name];
+    return '';
+  },
+  
+  echo: (args) => {
+    if (args.length === 0) return '';
+    
+    const outputIndex = args.indexOf('>');
+    if (outputIndex === -1) {
+    return args.join(' ');
+    }
+    
+    const message = args.slice(0, outputIndex).join(' ');
+    const fileName = args[outputIndex + 1];
+    
+    if (!fileName) return 'echo: syntaxe incorrecte';
+    
+    const path = resolvePath(fileName);
+    const parentPath = path.substring(0, path.lastIndexOf('/'));
+    const name = path.substring(path.lastIndexOf('/') + 1);
+    
+    let parent = navigateToPath(parentPath);
+    if (!parent) return `echo: impossible de créer '${fileName}': Chemin invalide`;
+    
+    parent.content[name] = { type: 'file', content: message };
+    return '';
+  },
+  
+  showUsername: () => {
+    return username;
+  },
+  
+  showHistory: () => {
+    return commandHistory.map((cmd, i) => `${i + 1}  ${cmd}`).join('\n');
+  },
+  
+  showManual: (args) => {
+    if (!args[0]) return 'Quelle page de manuel voulez-vous voir ?';
+    
+    const cmd = args[0];
+    if (!commands[cmd]) return `Aucune entrée de manuel pour ${cmd}`;
+    
+    return `NOM\n\t${cmd} - ${commands[cmd].description}\n\nSYNOPSIS\n\t${commands[cmd].usage}\n`;
+  },
+  
+  showSystemInfo: (args) => {
+    const info = {
+    sysname: 'Linux',
+    nodename: 'sandbox-machine',
+    release: '5.15.0-generic',
+    version: '#1 SMP Debian 11',
+    machine: 'x86_64'
+    };
+    
+    if (args.includes('-a')) {
+    return `${info.sysname} ${info.nodename} ${info.release} ${info.version} ${info.machine}`;
+    }
+    return info.sysname;
+  },
+  
+  grepSearch: (args) => {
+    if (args.length < 2) return 'grep: utilisation: grep <motif> <fichier>';
+    
+    const pattern = args[0];
+    const fileName = args[1];
+    const path = resolvePath(fileName);
+    
+    const file = navigateToPath(path);
+    if (!file) return `grep: ${fileName}: Aucun fichier ou dossier de ce type`;
+    if (file.type !== 'file') return `grep: ${fileName}: Est un dossier`;
+    
+    const matches = file.content.split('\n')
+    .filter(line => line.includes(pattern))
+    .join('\n');
+    
+    return matches || '';
+  },
+  
+  showDate: () => {
+    return new Date().toLocaleString();
+  },
+
+  exitTerminal: () => {
+    loginStep = 'username';
+    username = '';
+    currentDirectory = '/home/' + username;
+    commandHistory = [];
+    historyIndex = -1;
+    
+    const oldActiveLine = activeLine;
+    terminalContent.innerHTML = '';
+    terminalContent.appendChild(oldActiveLine);
+    
+    fileSystem = {
+      '/': {
+        type: 'directory',
+        content: {
+          'home': {
+            type: 'directory',
+            content: {}
+          }
         }
       }
-      return output;
-    },
-  
-    changeDirectory: (args) => {
-      if (!args[0]) {
-        currentDirectory = '/home/' + username;
-        return '';
-      }
-  
-      const newPath = resolvePath(args[0]);
-      const dir = navigateToPath(newPath);
-  
-      if (!dir || dir.type !== 'directory') {
-        return `cd: ${args[0]}: Aucun fichier ou dossier de ce type`;
-      }
-  
-      currentDirectory = newPath;
-      return '';
-    },
-  
-    makeDirectory: (args) => {
-      if (!args[0]) return 'mkdir: opérande manquant';
-      
-      const path = resolvePath(args[0]);
-      const parentPath = path.substring(0, path.lastIndexOf('/'));
-      const dirName = path.substring(path.lastIndexOf('/') + 1);
-      
-      let parent = navigateToPath(parentPath);
-      if (!parent) return `mkdir: impossible de créer le répertoire '${args[0]}': Chemin invalide`;
-      
-      parent.content[dirName] = { type: 'directory', content: {} };
-      return '';
-    },
-  
-    touchFile: (args) => {
-      if (!args[0]) return 'touch: opérande manquant';
-      
-      const path = resolvePath(args[0]);
-      const parentPath = path.substring(0, path.lastIndexOf('/'));
-      const fileName = path.substring(path.lastIndexOf('/') + 1);
-      
-      let parent = navigateToPath(parentPath);
-      if (!parent) return `touch: impossible de créer '${args[0]}': Chemin invalide`;
-      
-      parent.content[fileName] = { type: 'file', content: '' };
-      return '';
-    },
-  
-    showFileContent: (args) => {
-      if (!args[0]) return 'cat: opérande manquant';
-      
-      const path = resolvePath(args[0]);
-      const file = navigateToPath(path);
-      
-      if (!file) return `cat: ${args[0]}: Aucun fichier ou dossier de ce type`;
-      if (file.type !== 'file') return `cat: ${args[0]}: Est un dossier`;
-      
-      return file.content;
-    },
-  
-    removeFile: (args) => {
-      if (!args[0]) return 'rm: opérande manquant';
-      
-      const recursive = args.includes('-r');
-      const target = args[args.length - 1];
-      const path = resolvePath(target);
-      
-      const parentPath = path.substring(0, path.lastIndexOf('/'));
-      const name = path.substring(path.lastIndexOf('/') + 1);
-      
-      let parent = navigateToPath(parentPath);
-      if (!parent) return `rm: impossible de supprimer '${target}': Aucun fichier ou dossier de ce type`;
-      
-      const item = parent.content[name];
-      if (!item) return `rm: impossible de supprimer '${target}': Aucun fichier ou dossier de ce type`;
-      
-      if (item.type === 'directory' && !recursive) {
-        return `rm: impossible de supprimer '${target}': Est un dossier`;
-      }
-      
-      delete parent.content[name];
-      return '';
-    },
-  
-    echo: (args) => {
-      if (args.length === 0) return '';
-      
-      const outputIndex = args.indexOf('>');
-      if (outputIndex === -1) {
-        return args.join(' ');
-      }
-      
-      const message = args.slice(0, outputIndex).join(' ');
-      const fileName = args[outputIndex + 1];
-      
-      if (!fileName) return 'echo: syntaxe incorrecte';
-      
-      const path = resolvePath(fileName);
-      const parentPath = path.substring(0, path.lastIndexOf('/'));
-      const name = path.substring(path.lastIndexOf('/') + 1);
-      
-      let parent = navigateToPath(parentPath);
-      if (!parent) return `echo: impossible de créer '${fileName}': Chemin invalide`;
-      
-      parent.content[name] = { type: 'file', content: message };
-      return '';
-    },
-  
-    showUsername: () => {
-      return username;
-    },
-  
-    showHistory: () => {
-      return commandHistory.map((cmd, i) => `${i + 1}  ${cmd}`).join('\n');
-    },
-  
-    showManual: (args) => {
-      if (!args[0]) return 'Quelle page de manuel voulez-vous voir ?';
-      
-      const cmd = args[0];
-      if (!commands[cmd]) return `Aucune entrée de manuel pour ${cmd}`;
-      
-      return `NOM\n\t${cmd} - ${commands[cmd].description}\n\nSYNOPSIS\n\t${commands[cmd].usage}\n`;
-    },
-  
-    showSystemInfo: (args) => {
-      const info = {
-        sysname: 'Linux',
-        nodename: 'sandbox-machine',
-        release: '5.15.0-generic',
-        version: '#1 SMP Debian 11',
-        machine: 'x86_64'
-      };
-      
-      if (args.includes('-a')) {
-        return `${info.sysname} ${info.nodename} ${info.release} ${info.version} ${info.machine}`;
-      }
-      return info.sysname;
-    },
-  
-    grepSearch: (args) => {
-      if (args.length < 2) return 'grep: utilisation: grep <motif> <fichier>';
-      
-      const pattern = args[0];
-      const fileName = args[1];
-      const path = resolvePath(fileName);
-      
-      const file = navigateToPath(path);
-      if (!file) return `grep: ${fileName}: Aucun fichier ou dossier de ce type`;
-      if (file.type !== 'file') return `grep: ${fileName}: Est un dossier`;
-      
-      const matches = file.content.split('\n')
-        .filter(line => line.includes(pattern))
-        .join('\n');
-      
-      return matches || '';
-    },
-  
-    showDate: () => {
-      return new Date().toLocaleString();
-    },
-
-    exitTerminal: () => {
-      loginStep = 'username';
-      username = '';
-      currentDirectory = '/home/' + username;
-      commandHistory = [];
-      historyIndex = -1;
-      
-      const oldActiveLine = activeLine;
-      terminalContent.innerHTML = '';
-      terminalContent.appendChild(oldActiveLine);
-      
-      // Réinitialiser le système de fichiers
-      fileSystem = {
-          '/': {
-              type: 'directory',
-              content: {
-                  'home': {
-                      type: 'directory',
-                      content: {}
-                  }
-              }
-          }
-      };
-      
-      updatePrompt();
-      return 'Déconnexion...';
+    };
+    
+    updatePrompt();
+    return 'Déconnexion...';
   },
 
   moveFile: (args) => {
-      if (args.length !== 2) return 'mv: utilisation: mv <source> <destination>';
-      
-      const sourcePath = resolvePath(args[0]);
-      const destPath = resolvePath(args[1]);
-      
-      const sourceParentPath = sourcePath.substring(0, sourcePath.lastIndexOf('/'));
-      const sourceName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1);
-      
-      const destParentPath = destPath.substring(0, destPath.lastIndexOf('/'));
-      const destName = destPath.substring(destPath.lastIndexOf('/') + 1);
-      
-      const sourceParent = navigateToPath(sourceParentPath);
-      const destParent = navigateToPath(destParentPath);
-      
-      if (!sourceParent || !sourceParent.content[sourceName]) {
-          return `mv: impossible de déplacer '${args[0]}': Aucun fichier ou dossier de ce type`;
-      }
-      
-      if (!destParent) {
-          return `mv: impossible de déplacer vers '${args[1]}': Chemin invalide`;
-      }
-      
-      // Déplacer le fichier/dossier
-      destParent.content[destName] = sourceParent.content[sourceName];
-      delete sourceParent.content[sourceName];
-      return '';
+    if (args.length !== 2) return 'mv: utilisation: mv <source> <destination>';
+    
+    const sourcePath = resolvePath(args[0]);
+    const destPath = resolvePath(args[1]);
+    
+    const sourceParentPath = sourcePath.substring(0, sourcePath.lastIndexOf('/'));
+    const sourceName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1);
+    
+    const destParentPath = destPath.substring(0, destPath.lastIndexOf('/'));
+    const destName = destPath.substring(destPath.lastIndexOf('/') + 1);
+    
+    const sourceParent = navigateToPath(sourceParentPath);
+    const destParent = navigateToPath(destParentPath);
+    
+    if (!sourceParent || !sourceParent.content[sourceName]) {
+      return `mv: impossible de déplacer '${args[0]}': Aucun fichier ou dossier de ce type`;
+    }
+    
+    if (!destParent) {
+      return `mv: impossible de déplacer vers '${args[1]}': Chemin invalide`;
+    }
+    
+    
+    destParent.content[destName] = sourceParent.content[sourceName];
+    delete sourceParent.content[sourceName];
+    return '';
   },
 
-  copyFile: (args) => {
-      if (args.length !== 2) return 'cp: utilisation: cp [-r] <source> <destination>';
-      
-      const recursive = args[0] === '-r';
-      const sourceArg = recursive ? args[1] : args[0];
-      const destArg = recursive ? args[2] : args[1];
-      
-      const sourcePath = resolvePath(sourceArg);
-      const destPath = resolvePath(destArg);
-      
-      const source = navigateToPath(sourcePath);
-      if (!source) return `cp: impossible de copier '${sourceArg}': Aucun fichier ou dossier de ce type`;
-      
-      if (source.type === 'directory' && !recursive) {
-          return `cp: impossible de copier '${sourceArg}': Est un dossier`;
-      }
-      
-      // Fonction récursive pour copier un objet
-      const deepCopy = obj => JSON.parse(JSON.stringify(obj));
-      
-      const destParentPath = destPath.substring(0, destPath.lastIndexOf('/'));
-      const destName = destPath.substring(destPath.lastIndexOf('/') + 1);
-      
-      const destParent = navigateToPath(destParentPath);
-      if (!destParent) return `cp: impossible de copier vers '${destArg}': Chemin invalide`;
-      
-      destParent.content[destName] = deepCopy(source);
-      return '';
+  copyFile: (args) => { 
+    if (args.length !== 2) return 'cp: utilisation: cp [-r] <source> <destination>';
+    
+    const recursive = args[0] === '-r';
+    const sourceArg = recursive ? args[1] : args[0];
+    const destArg = recursive ? args[2] : args[1];
+    
+    const sourcePath = resolvePath(sourceArg);
+    const destPath = resolvePath(destArg);
+    
+    const source = navigateToPath(sourcePath);
+    if (!source) return `cp: impossible de copier '${sourceArg}': Aucun fichier ou dossier de ce type`;
+    
+    if (source.type === 'directory' && !recursive) {
+      return `cp: impossible de copier '${sourceArg}': Est un dossier`;
+    }
+    
+    const deepCopy = obj => JSON.parse(JSON.stringify(obj));
+    
+    const destParentPath = destPath.substring(0, destPath.lastIndexOf('/'));
+    const destName = destPath.substring(destPath.lastIndexOf('/') + 1);
+    
+    const destParent = navigateToPath(destParentPath);
+    if (!destParent) return `cp: impossible de copier vers '${destArg}': Chemin invalide`;
+    
+    destParent.content[destName] = deepCopy(source);
+    return '';
   },
 
   findFiles: (args) => {
-      if (!args[0]) return 'find: utilisation: find <pattern>';
-      
-      const pattern = args[0];
-      const results = [];
-      
-      const searchInDirectory = (path, dir) => {
-          for (const [name, item] of Object.entries(dir.content)) {
-              const fullPath = `${path}/${name}`;
-              if (name.includes(pattern)) {
-                  results.push(fullPath);
-              }
-              if (item.type === 'directory') {
-                  searchInDirectory(fullPath, item);
-              }
-          }
-      };
-      
-      searchInDirectory('', fileSystem['/']);
-      return results.join('\n') || 'Aucun fichier trouvé';
+    if (!args[0]) return 'find: utilisation: find <pattern>';
+    
+    const pattern = args[0];
+    const results = [];
+    
+    const searchInDirectory = (path, dir) => {
+      for (const [name, item] of Object.entries(dir.content)) {
+        const fullPath = `${path}/${name}`;
+        if (name.includes(pattern)) {
+          results.push(fullPath);
+        }
+        if (item.type === 'directory') {
+          searchInDirectory(fullPath, item);
+        }
+      }
+    };
+    
+    searchInDirectory('', fileSystem['/']);
+    return results.join('\n') || 'Aucun fichier trouvé';
   },
 
   showProcesses: () => {
-      const processes = [
-          'PID TTY          TIME CMD',
-          '1   pts/0    00:00:00 bash',
-          '15  pts/0    00:00:00 ps',
-          '24  pts/0    00:00:01 node',
-          '35  pts/0    00:00:00 terminal'
-      ];
-      return processes.join('\n');
+    const processes = [
+      'PID TTY          TIME CMD',
+      '1   pts/0    00:00:00 bash',
+      '15  pts/0    00:00:00 ps',
+      '24  pts/0    00:00:01 node',
+      '35  pts/0    00:00:00 terminal'
+    ];
+    return processes.join('\n');
   },
 
   showDiskUsage: (args) => {
-      const path = args[0] || '.';
-      const resolvedPath = resolvePath(path);
-      const target = navigateToPath(resolvedPath);
-      
-      if (!target) return `du: impossible d'accéder à '${path}': Aucun fichier ou dossier de ce type`;
-      
-      const calculateSize = (item) => {
-          if (item.type === 'file') return 4;
-          let size = 4; // Taille minimale pour un dossier
-          for (const subItem of Object.values(item.content)) {
-              size += calculateSize(subItem);
-          }
-          return size;
-      };
-      
-      return `${calculateSize(target)}\t${resolvedPath}`;
+    const path = args[0] || '.';
+    const resolvedPath = resolvePath(path);
+    const target = navigateToPath(resolvedPath);
+    
+    if (!target) return `du: impossible d'accéder à '${path}': Aucun fichier ou dossier de ce type`;
+    
+    const calculateSize = (item) => {
+      if (item.type === 'file') return 4;
+      let size = 4;
+      for (const subItem of Object.values(item.content)) {
+        size += calculateSize(subItem);
+      }
+      return size;
+    };
+    
+    return `${calculateSize(target)}\t${resolvedPath}`;
+  },
+
+  changePermissions: (args) => {
+    if (args.length !== 2) return 'chmod: utilisation: chmod <mode> <fichier>';
+    
+    const mode = args[0];
+    const path = resolvePath(args[1]);
+    const file = navigateToPath(path);
+    
+    if (!file) return `chmod: impossible d'accéder à '${args[1]}': Aucun fichier ou dossier de ce type`;
+    
+    if (!/^[0-7]{3}$/.test(mode)) {
+        return 'chmod: mode invalide: ' + mode;
+    }
+
+    const permissions = {
+        
+        '777': 'rwxrwxrwx',
+        '770': 'rwxrwx---',
+        '760': 'rwxrw----',
+        '750': 'rwxr-x---',
+        '740': 'rwxr-----',
+        '730': 'rwxrwx---',
+        '720': 'rwx-w----',
+        '710': 'rwx--x---',
+        '700': 'rwx------',
+        
+        
+        '677': 'rw-rwxrwx',
+        '670': 'rw-rwx---',
+        '660': 'rw-rw----',
+        '650': 'rw-r-x---',
+        '640': 'rw-r-----',
+        '630': 'rw--wx---',
+        '620': 'rw--w----',
+        '610': 'rw---x---',
+        '600': 'rw-------',
+        
+        
+        '577': 'r-xrwxrwx',
+        '570': 'r-xrwx---',
+        '560': 'r-xrw----',
+        '550': 'r-xr-x---',
+        '540': 'r-xr-----',
+        '530': 'r-x-wx---',
+        '520': 'r-x-w----',
+        '510': 'r-x--x---',
+        '500': 'r-x------',
+        
+        
+        '644': 'rw-r--r--',
+        '755': 'rwxr-xr-x',
+        '766': 'rwxrw-rw-',
+        '777': 'rwxrwxrwx',
+        '400': 'r--------',
+        '444': 'r--r--r--',
+        '666': 'rw-rw-rw-',
+        '700': 'rwx------',
+        '744': 'rwxr--r--',
+        '555': 'r-xr-xr-x',
+        '600': 'rw-------',
+        '711': 'rwx--x--x',
+        '444': 'r--r--r--'
+    };
+
+    if (permissions[mode]) {
+        file.permissions = permissions[mode];
+    } else {
+        const owner = parseInt(mode[0]);
+        const group = parseInt(mode[1]);
+        const others = parseInt(mode[2]);
+        
+        const convertToRWX = (num) => {
+            return [
+                (num & 4) ? 'r' : '-',
+                (num & 2) ? 'w' : '-',
+                (num & 1) ? 'x' : '-'
+            ].join('');
+        };
+        
+        file.permissions = convertToRWX(owner) + convertToRWX(group) + convertToRWX(others);
+    }
+
+    return '';
   }
 };
 
-
-
-function resolvePath(path) {
-    if (path.startsWith('/')) return path;
-    if (path === '..') {
-      return currentDirectory.substring(0, currentDirectory.lastIndexOf('/'));
-    }
-    if (path === '.') return currentDirectory;
-    return `${currentDirectory}/${path}`;
-}
   
 function resolvePath(path) {
     if (path.startsWith('/')) return path;
@@ -431,18 +623,18 @@ function resolvePath(path) {
 }
   
 function navigateToPath(path) {
-const parts = path.split('/').filter(p => p);
-let current = fileSystem['/'];
+  const parts = path.split('/').filter(p => p);
+  let current = fileSystem['/'];
 
-for (const part of parts) {
-    if (part === '..') {
-        continue;
-    }
-    if (!current.content[part]) return null;
-    current = current.content[part];
-}
+  for (const part of parts) {
+      if (part === '..') {
+          continue;
+      }
+      if (!current.content[part]) return null;
+      current = current.content[part];
+  }
 
-return current;
+  return current;
 }
 
 function addToHistory(input, isCommand = true) {
@@ -476,18 +668,35 @@ function updatePrompt() {
 }
 
 function handleLogin(input) {
-    if (loginStep === 'username') {
-        username = input;
-        userPrompt = `${username}@machine $ `;
-        addToHistory('Login: ' + input);
-        loginStep = 'password';
-        updatePrompt();
-    } else if (loginStep === 'password') {
-        addToHistory('Password: *****');
-        addToHistory(`Welcome ${username} !`, false);
-        loginStep = 'complete';
-        updatePrompt();
-    }
+  if (loginStep === 'username') {
+      username = input;
+      if (!fileSystem['/'].content['home']) {
+          fileSystem['/'].content['home'] = {
+              type: 'directory',
+              content: {}
+          };
+      }
+      fileSystem['/'].content['home'].content[username] = {
+          type: 'directory',
+          content: {
+              'Documents': { type: 'directory', content: {} },
+              'Images': { type: 'directory', content: {} },
+              'Téléchargements': { type: 'directory', content: {} },
+              'Bureau': { type: 'directory', content: {} },
+              '.bashrc': { type: 'file', content: '# Configuration du terminal' }
+          }
+      };
+      
+      currentDirectory = `/home/${username}`;
+      userPrompt = `${username}@machine: ${currentDirectory} $ `;
+      addToHistory('Login: ' + input);
+      loginStep = 'password';
+      updatePrompt();
+  } else if (loginStep === 'password') {
+      addToHistory(`Welcome ${username} !`, false);
+      loginStep = 'complete';
+      updatePrompt();
+  }
 }
 
 function executeCommand(commandStr) {

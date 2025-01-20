@@ -7,69 +7,125 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
-    <!-- Ajout de Marked.js pour le Markdown -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Ajout de Highlight.js pour la coloration syntaxique -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <div class="content" onclick="clickOutside()">
-        <div class="navbar">
-            <input type="text" id="search" placeholder="Rechercher une commande...">
-
-            <div class="sandbox-link">
-                <a href="./html/sandbox.html">Sandbox &nbsp</a>
-                <img src="./img/svg/sandbox.svg" alt="sandbox icon">
-            </div>
-
-            <img src="./img/svg/dark.svg" class="dark" alt="Dark theme">
-            <img src="./img/svg/light.svg" class="light" alt="Light theme">
-        </div>
-        <!-- Section des commandes Linux -->
-        <div style="display: flex; flex-direction: row;">
-            <div id="commands-section">
-                <h1>Guide des Commandes Linux</h1>
-                <div id="commands"></div>
-            </div>
-        </div>
+<div class="content">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle-container">
+        <img src="./img/svg/dark.svg" class="dark" alt="Dark theme">
+        <img src="./img/svg/light.svg" class="light" alt="Light theme">
     </div>
 
-    <div id="chat-container" style="display: none;">
-        <div id="chat-header">
-            <div id="chat-title">Assistant Linux</div>
-                <button id="minimize-chat">
-                    <i class="fas fa-minus"></i>
-                </button>
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Guide Linux Section -->
+        <section class="linux-guide">
+            <h1 class="main-title">
+                <a href="https://github.com/pwned841/linux-helper" class="title-link">
+                    Guide Linux
+                    <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" class="github-icon">
+                        <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                    </svg>
+                </a>
+            </h1>
+
+            <!-- Navigation Cards -->
+            <div class="nav-cards-grid">
+                <a href="./html/exercise.html" class="nav-card">
+                    <h3>Exercices</h3>
+                    <p>Testez vos connaissances sur les commandes Linux avec des exercices interactifs</p>
+                </a>
+
+                <a href="./html/sandbox.html" class="nav-card">
+                    <h3>Sandbox</h3>
+                    <p>Expérimentez avec les commandes Linux dans un environnement sécurisé</p>
+                </a>
+
+                <div class="nav-card search-card">
+                    <h3>Rechercher</h3>
+                    <input type="text" id="search" placeholder="Rechercher une commande...">
+                </div>
             </div>
-        <div id="chat-messages">
-            <div class="message ai-message">
-                Bonjour ! Je suis votre assistant Linux. Comment puis-je vous aider avec vos questions sur Linux aujourd'hui ? <br> (Je n'ai pas de mémoire entre chaque message !)
+
+            <h2>Ressources utiles</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>Qu'est-ce que Linux ?</h3>
+                    <p>Linux est un système d'exploitation open source créé par Linus Torvalds en 1991. C'est un noyau Unix-like qui est devenu la base de nombreuses distributions.</p>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Histoire rapide</h3>
+                    <p>Né comme un projet personnel, Linux s'est rapidement développé grâce à la collaboration mondiale. Il est maintenant utilisé partout, des smartphones aux super-ordinateurs.</p>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Distributions populaires</h3>
+                    <ul>
+                        <li><strong>Ubuntu</strong> - Convivial, parfait pour les débutants</li>
+                        <li><strong>Fedora</strong> - Innovation et dernières technologies</li>
+                        <li><strong>Debian</strong> - Stable et fiable</li>
+                        <li><strong>Arch Linux</strong> - Flexible et personnalisable</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <h3>Pourquoi utiliser Linux ?</h3>
+                    <ul>
+                        <li>Gratuit et open source</li>
+                        <li>Hautement sécurisé</li>
+                        <li>Personnalisable</li>
+                        <li>Performant</li>
+                    </ul>
+                </div>
             </div>
+        </section>
+
+        <!-- Commands Grid -->
+        <section class="commands-section">
+            <h2>Commandes essentielles</h2>
+            <div id="commands" class="commands-grid"></div>
+        </section>
+    </div>
+</div>
+
+<script src="./js/script.js"></script>
+<script src="./js/light-dark_theme.js"></script>
+
+<!-- Chat Container -->
+<div id="chat-container" style="display: none;">
+    <div id="chat-header">
+        <div id="chat-title">Assistant Linux</div>
+        <button id="minimize-chat">
+            <i class="fas fa-minus"></i>
+        </button>
+    </div>
+    <div id="chat-messages">
+        <div class="message ai-message">
+            Bonjour ! Je suis votre assistant Linux. Comment puis-je vous aider avec vos questions sur Linux aujourd'hui ? <br> (Je n'ai pas de mémoire entre chaque message !)
         </div>
-        <div id="chat-input-container">
-            <form id="chat-form">
-                <textarea 
-                    id="chat-input" 
-                    placeholder="Posez votre question sur Linux..." 
-                    rows="1"
-                    maxlength="500"
+    </div>
+    <div id="chat-input-container">
+        <form id="chat-form">
+                <textarea
+                        id="chat-input"
+                        placeholder="Posez votre question sur Linux..."
+                        rows="1"
+                        maxlength="500"
                 ></textarea>
-                <button id="send-message" type="submit">
-                    <img src="./img/svg/plane.svg" alt="Paper Plane">
-                </button>
-            </form>
-        </div>
+            <button id="send-message" type="submit">
+                <img src="./img/svg/plane.svg" alt="Paper Plane">
+            </button>
+        </form>
     </div>
-    <div class="popup" onclick="clickForChat()" style="bottom: 20px;">
-        <img src="./img/svg/chat.svg" alt="ChatBox icon">
-    </div>
+</div>
 
-    
+<!-- Chat Popup Button -->
+<div class="popup" onclick="clickForChat()" style="bottom: 20px;">
+    <img src="./img/svg/chat.svg" alt="ChatBox icon">
+</div>
 
-    <script src="./js/script.js"></script>
-    <script src="./js/chatbox.js"></script>
-    <script src="./js/light-dark_theme.js"></script>
+<script src="./js/chatbox.js"></script>
 </body>
 </html>

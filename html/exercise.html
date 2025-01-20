@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercices - Commandes Linux</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="content">
+    <div class="navbar">
+        <a href="../linux-command.html">Accueil</a>
+        <div class="sandbox-link">
+            <a href="./sandbox.html">Sandbox &nbsp;</a>
+            <img src="../img/svg/sandbox.svg" alt="sandbox icon">
+        </div>
+        <img src="../img/svg/dark.svg" class="dark" alt="Dark theme">
+        <img src="../img/svg/light.svg" class="light" alt="Light theme">
+    </div>
+
+    <div class="exercise-container">
+        <div class="exercise-box">
+            <h2>Test de connaissances Linux</h2>
+            <p id="score">Score : 0 / 0</p>
+            <div class="question-box">
+                <p id="command-description"></p>
+                <input type="text" id="user-answer" placeholder="Entrez la commande...">
+                <button id="submit-answer">Valider</button>
+            </div>
+            <div id="feedback" class="feedback"></div>
+            <button id="next-question">Question suivante</button>
+        </div>
+    </div>
+</div>
+
+<script src="../js/script.js"></script>
+<script src="../js/exercise.js"></script>
+<script src="../js/light-dark_theme.js"></script>
+</body>
+</html>
